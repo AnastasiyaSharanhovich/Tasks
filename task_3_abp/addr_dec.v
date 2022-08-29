@@ -44,34 +44,6 @@ always @(posedge PCLK or PRESETn) begin
                                                        if( bit == PADDR-REGR_ADDR_OFFSET) pselr[bit] = 1;
                                                            else pselr[bit] = 0; end  
                     end
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                                       decod d1(  .sel_vector (PSEL[REGWN+REGRN-1:0]),   
-                                                  .mode       (PWRITE),   
-                                                  .addr       (my_int_addr),
-                                                  .rewhrite_w   (pselw_w[REGWN-1:0]), 
-                                                  .rewhrite_r   (pselw_r[REGWN-1:0]), 
-                                                  .status     (pselr[REGRN-1:0])); 
 end
 
 endmodule
