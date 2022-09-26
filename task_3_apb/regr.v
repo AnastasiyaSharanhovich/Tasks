@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module regr_RO  #(    parameter DWIDTH = 8 )(
+module regr  #(    parameter DWIDTH = 8 )(
                       input  wire                         PCLK,
                       input  wire                         PENABLE,
                       input  wire                         PWRITE,
@@ -9,11 +9,11 @@ module regr_RO  #(    parameter DWIDTH = 8 )(
                       input  wire [DWIDTH-1:0]            regr_in,        
                       output reg  [DWIDTH-1:0]            PRDATA);
                    
-reg [DWIDTH-1:0]  regr;
+reg [DWIDTH-1:0]  regr_RO;
 
 always @(posedge PCLK) begin
-   regr = regr_in; 
-   if (PSEL == 1 && PENABLE == 1'b 1)  PRDATA = regr; 
+   regr_RO = regr_in; 
+   if (PSEL == 1 && PENABLE == 1'b 1)  PRDATA = regr_RO; 
 end
 
 endmodule
