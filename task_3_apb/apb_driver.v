@@ -8,10 +8,7 @@ module apb_driver
                (
                   // General signals
                    input                     pclk ,
-                   input                     presetn,
                   // APB signals
-                   input                     pslverr,
-                   input                     pready,
                    input        [DWIDTH-1:0] prdata,
                    output logic              penable,
                    output logic [AWIDTH-1:0] paddr,
@@ -92,18 +89,5 @@ module apb_driver
                 $display(" Read: addr =%d, data =%b",addr, rdata); 
                
    endtask: read_data
-   
-   top top_cnct
-   (
-   .PCLK (pclk),
-   .PRESETn (presetn),
-   .PENABLE (penable),
-   .PSEL (psel),
-   .PWRITE (pwrite),
-   .PADDR (paddr),
-   .PRDATA (prdata),
-   .PSLVERR (pslverr),
-   .PREADY (pready)
-   );  
-                           
+                    
 endmodule
