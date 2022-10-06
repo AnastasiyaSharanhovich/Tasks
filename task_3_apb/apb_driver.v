@@ -43,7 +43,7 @@ module apb_driver
                paddr =  addr;
                pwdata = data;
                
-               $display("Write single data: addr =%d, data =%d",addr, data);
+               $display("Write single data: addr =%d, data =%h",addr, data);
                
                
                // WRITE STATE
@@ -86,7 +86,7 @@ module apb_driver
                 penable = 0;
                 rdata = prdata;
                 
-                $display(" Read: addr =%d, data =%b",addr, rdata); 
+                $display(" Read: addr =%d, data =%h",addr, rdata); 
                
    endtask: read_data
                     

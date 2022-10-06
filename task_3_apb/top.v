@@ -25,12 +25,12 @@ module top  #(parameter AWIDTH = 4,
               input  wire  [DWIDTH-1:0]            PWDATA,
               
               output wire                          PSLVERR,
-              output wire  [DWIDTH-1:0]            PRDATA,
+              output wire [DWIDTH-1:0]            PRDATA,
               output wire                          PREADY);
         
  
 reg [REGWN-1:0] pselw;
-reg [REGWN-1:0] pselr;
+reg [REGRN-1:0] pselr;
 
               
 reg [DWIDTH-1:0]            prdata_regw0;
@@ -44,7 +44,7 @@ reg  [DWIDTH-1:0]            prdata_regr1;
 reg  [DWIDTH-1:0]            prdata_regr2;
 
 assign PREADY  = 1'b1;
-assign PRDATA  = prdata_regw0 || prdata_regw1 || prdata_regw2 || prdata_regw3 || prdata_regw4 || prdata_regr0 || prdata_regr1 || prdata_regr2;
+assign PRDATA  = prdata_regw0 | prdata_regw1 | prdata_regw2 | prdata_regw3 | prdata_regw4 | prdata_regr0 | prdata_regr1 | prdata_regr2;
 
 
 addr_dec decode
@@ -55,7 +55,7 @@ addr_dec decode
 .PSEL (PSEL),
 .PWRITE (PWRITE),
 .PADDR (PADDR),
-.PRDATA (PRDATA),
+//.PRDATA (PRDATA),
 .PSLVERR (PSLVERR),
 .pselw (pselw),
 .pselr (pselr)

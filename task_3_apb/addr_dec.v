@@ -16,9 +16,13 @@ module addr_dec  #(parameter AWIDTH = 4,
                    output reg  [REGWN-1:0]             pselw,
                    output reg  [REGRN-1:0]             pselr);
                    
-                   integer nbit;
+                   integer nbit=0;
 
-always @(PENABLE or PSEL) if (( PADDR > (REGR_ADDR_OFFSET+REGRN-1)) || ((PWRITE == 0) && (PADDR >= REGR_ADDR_OFFSET )))
+always @(PENABLE or PSEL) begin
+ PSLVERR = 0;
+ pselw = 'b0;
+ pselr = 'b0;
+             if (( PADDR > (REGR_ADDR_OFFSET+REGRN-1)) || ((PWRITE == 0) && (PADDR >= REGR_ADDR_OFFSET )) || (!PRESETn))
                     PSLVERR = 1; 
                     else if (PENABLE || PSEL) begin    
                          if ( PADDR < REGR_ADDR_OFFSET ) // RW-reg
@@ -32,12 +36,5 @@ always @(PENABLE or PSEL) if (( PADDR > (REGR_ADDR_OFFSET+REGRN-1)) || ((PWRITE 
                                                        if( nbit == PADDR-REGR_ADDR_OFFSET) pselr[nbit] = 1;
                                                            else pselr[nbit] = 0; end  
                     end
-
-always @(posedge PCLK or negedge PRESETn) begin
-        if(!PRESETn) begin
-            PSLVERR = 1;
-            PRDATA = 0;
-            end
-  end
-  
+end
 endmodule

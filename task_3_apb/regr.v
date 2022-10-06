@@ -13,7 +13,7 @@ reg [DWIDTH-1:0]  regr_RO;
 
 always @(posedge PCLK) begin
    regr_RO = regr_in; 
-   if (PSEL == 1 && PENABLE == 1'b 1)  PRDATA = regr_RO; else PRDATA = 0; // is not a problem, when in top i assign PRDATA other staitment? 
+   if (PSEL == 1 && PENABLE == 1'b 1)  PRDATA = regr_RO; else PRDATA = 0; 
 end
 
 endmodule
