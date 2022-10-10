@@ -49,8 +49,6 @@ assign PRDATA  = prdata_regw0 | prdata_regw1 | prdata_regw2 | prdata_regw3 | prd
 
 addr_dec decode
 (
-.PCLK (PCLK),
-.PRESETn (PRESETn),
 .PENABLE (PENABLE),
 .PSEL (PSEL),
 .PWRITE (PWRITE),

@@ -5,20 +5,17 @@ module addr_dec  #(parameter AWIDTH = 4,
                    parameter REGWN  = 5, 
                    parameter REGRN  = 3,
                    parameter REGR_ADDR_OFFSET = 5)(
-                   input  wire                         PCLK,
-                   input  wire                         PRESETn,
                    input  wire                         PSEL,
                    input  wire                         PWRITE,
                    input  wire                         PENABLE,
                    input  wire [AWIDTH-1:0]            PADDR,
-                   output reg  [DWIDTH-1:0]            PRDATA,
                    output reg                          PSLVERR,
                    output reg  [REGWN-1:0]             pselw,
                    output reg  [REGRN-1:0]             pselr);
                    
                    integer nbit=0;
 
-always @(PENABLE or PSEL) begin
+always @(*) begin
  PSLVERR = 0;
  pselw = 'b0;
  pselr = 'b0;

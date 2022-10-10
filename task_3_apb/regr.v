@@ -14,8 +14,8 @@ reg [DWIDTH-1:0]  regr_RO;
 assign PRDATA = (PSEL && PENABLE) ? regr_RO : 'b0;
 
 always @(posedge PCLK or negedge PRESETn) begin //add presetn
-   if(!PRESETn) regr_RO = 'b0;
-   regr_RO = regr_in; 
+   if(!PRESETn) regr_RO = 'b0; 
+       else regr_RO = regr_in; 
 end
 
 endmodule
