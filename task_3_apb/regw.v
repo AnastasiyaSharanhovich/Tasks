@@ -16,7 +16,7 @@ assign PRDATA = (!PWRITE && PSEL && PENABLE) ? regw_RW : 'b0;
 
 always @(PSEL or negedge PRESETn) begin
      if (!PRESETn)   regw_RW = 'b0;
-     if (PWRITE && PSEL && !PENABLE) regw_RW=PWDATA;
+     else if (PWRITE && PSEL && !PENABLE) regw_RW=PWDATA;
 end
      
 endmodule
