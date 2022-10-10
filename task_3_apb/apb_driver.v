@@ -81,10 +81,11 @@ module apb_driver
              
                 
                 @(posedge pclk);
+                rdata = prdata;
                 #1;
                 psel = 0;
                 penable = 0;
-                rdata = prdata;
+                
                 
                 $display(" Read: addr =%d, data =%h",addr, rdata); 
                

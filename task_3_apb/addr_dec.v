@@ -22,7 +22,7 @@ always @(PENABLE or PSEL) begin
  PSLVERR = 0;
  pselw = 'b0;
  pselr = 'b0;
-             if (( PADDR > (REGR_ADDR_OFFSET+REGRN-1)) || ((PWRITE == 0) && (PADDR >= REGR_ADDR_OFFSET )) || (!PRESETn))
+             if (( PADDR > (REGR_ADDR_OFFSET+REGRN-1)) || ((PWRITE == 0) && (PADDR >= REGR_ADDR_OFFSET )))
                     PSLVERR = 1; 
                     else if (PENABLE || PSEL) begin    
                          if ( PADDR < REGR_ADDR_OFFSET ) // RW-reg

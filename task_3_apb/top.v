@@ -25,7 +25,7 @@ module top  #(parameter AWIDTH = 4,
               input  wire  [DWIDTH-1:0]            PWDATA,
               
               output wire                          PSLVERR,
-              output wire [DWIDTH-1:0]            PRDATA,
+              output wire  [DWIDTH-1:0]            PRDATA,
               output wire                          PREADY);
         
  
@@ -55,7 +55,6 @@ addr_dec decode
 .PSEL (PSEL),
 .PWRITE (PWRITE),
 .PADDR (PADDR),
-//.PRDATA (PRDATA),
 .PSLVERR (PSLVERR),
 .pselw (pselw),
 .pselr (pselr)
@@ -66,6 +65,7 @@ addr_dec decode
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselw[0]),
 .PWRITE (PWRITE),
 .PWDATA (PWDATA),
@@ -77,6 +77,7 @@ regw regw1
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselw[1]),
 .PWRITE (PWRITE),
 .PWDATA (PWDATA),
@@ -88,6 +89,7 @@ regw regw2
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselw[2]),
 .PWRITE (PWRITE),
 .PWDATA (PWDATA),
@@ -99,6 +101,7 @@ regw regw3
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselw[3]),
 .PWRITE (PWRITE),
 .PWDATA (PWDATA),
@@ -111,6 +114,7 @@ regw regw4
 .PCLK (PCLK),
 .PENABLE (PENABLE),
 .PSEL (pselw[4]),
+.PRESETn (PRESETn),
 .PWRITE (PWRITE),
 .PWDATA (PWDATA),
 .PRDATA (prdata_regw4), 
@@ -121,6 +125,7 @@ regr regr0
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselr[0]),
 .PWRITE (PWRITE),
 .PRDATA (prdata_regr0), 
@@ -131,6 +136,7 @@ regr regr1
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselr[1]),
 .PWRITE (PWRITE),
 .PRDATA (prdata_regr1), 
@@ -141,6 +147,7 @@ regr regr2
 (
 .PCLK (PCLK),
 .PENABLE (PENABLE),
+.PRESETn (PRESETn),
 .PSEL (pselr[2]),
 .PWRITE (PWRITE),
 .PRDATA (prdata_regr2), 

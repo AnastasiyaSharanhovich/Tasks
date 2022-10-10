@@ -4,20 +4,20 @@ module regw  #(    parameter DWIDTH = 8)(
                       input  wire                         PCLK,
                       input  wire                         PENABLE,
                       input  wire                         PWRITE,
+                      input  wire                         PRESETn,
                       input  wire                         PSEL,       
-                      input  wire [DWIDTH-1:0]            PWDATA,       
-                      output reg  [DWIDTH-1:0]            PRDATA,
-                      output reg  [DWIDTH-1:0]            regw_out );
+                      input  wire  [DWIDTH-1:0]           PWDATA,       
+                      output wire  [DWIDTH-1:0]           PRDATA,
+                      output wire  [DWIDTH-1:0]           regw_out );
                    
 reg [DWIDTH-1:0]   regw_RW;
+assign regw_out = regw_RW;
+assign PRDATA = (!PWRITE && PSEL && PENABLE) ? regw_RW : 'b0;
 
-always @(posedge PCLK) begin
-   case ( PWRITE ) 
-          0:  if (PSEL == 1'b1 && PENABLE == 1'b1) begin regw_out = regw_RW; PRDATA = regw_RW; end 
-                                            else begin regw_out = 0; PRDATA = 0;end
-          1:  if (PSEL == 1'b1 && PENABLE == 1'b1) regw_RW=PWDATA;
-   endcase               
+always @(PSEL or negedge PRESETn) begin
+     if (!PRESETn)   regw_RW = 'b0;
+     if (PWRITE && PSEL && !PENABLE) regw_RW=PWDATA;
 end
-
+     
 endmodule
 

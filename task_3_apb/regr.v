@@ -5,15 +5,17 @@ module regr  #(    parameter DWIDTH = 8 )(
                       input  wire                         PCLK,
                       input  wire                         PENABLE,
                       input  wire                         PWRITE,
-                      input  wire                         PSEL,   
+                      input  wire                         PSEL,  
+                      input  wire                         PRESETn, 
                       input  wire [DWIDTH-1:0]            regr_in,        
-                      output reg  [DWIDTH-1:0]            PRDATA);
+                      output wire [DWIDTH-1:0]            PRDATA);
                    
 reg [DWIDTH-1:0]  regr_RO;
+assign PRDATA = (PSEL && PENABLE) ? regr_RO : 'b0;
 
-always @(posedge PCLK) begin
+always @(posedge PCLK or negedge PRESETn) begin //add presetn
+   if(!PRESETn) regr_RO = 'b0;
    regr_RO = regr_in; 
-   if (PSEL == 1 && PENABLE == 1'b 1)  PRDATA = regr_RO; else PRDATA = 0; 
 end
 
 endmodule
