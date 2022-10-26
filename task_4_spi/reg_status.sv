@@ -1,16 +1,16 @@
 `timescale 1ns / 1ps
 
-module reg_status (
-                      input  wire                         PRESETn,
-                      input  wire                         PSEL,       
-                      output wire                         STATUS_DATA );
+module reg_status #(parameter WIDTH = 4)(
+                  //    input  wire                         PSEL,       
+                      output wire                         TXFIFO_FULL,
+                      output wire                         TXFIFO_EMPTY,
+                      output wire                         RXFIFO_FULL,
+                      output wire                         RXFIFO_EMPTY );
 
-reg  reg_status = 1'b0;
-assign STATUS_DATA = reg_status;
-                      
-always @(PSEL or negedge PRESETn) begin
-       if (!PRESETn)   reg_status = 1'b0;
-             else if (PSEL) reg_status = 1'b1;
-end
+reg [WIDTH-1:0] reg_status = 'b0;
+assign TXFIFO_FULL = reg_status[0];
+assign TXFIFO_EMPTY = reg_status[1];
+assign RXFIFO_FULL = reg_status[2];
+assign RXFIFO_EMPTY = reg_status[2];
 
 endmodule

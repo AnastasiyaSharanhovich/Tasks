@@ -12,7 +12,7 @@ reg     [N-1 : 0]	cnt = 0 ;
 initial begin
 SPI_CLK = 0; end
     
-	always @ (posedge PClK or negedge PRESETn) // Do I need a reset here ??
+	always @ (posedge PClK or negedge PRESETn) 
         begin    
             if(!PRESETn)   
                     SPI_CLK = 0;
