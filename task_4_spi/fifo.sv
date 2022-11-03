@@ -4,15 +4,15 @@
 module fifo # (parameter DWIDTH = 0,
                parameter FIFO_DEPTH = 0,
                parameter counter_width = $clog2 (FIFO_DEPTH + 1))
-( apb_intf FIFO_TX,
- // apb_int FIFO_RX
+( input wire                        CLK,
+  input wire                        RESETn,
   input wire                        PUSH,
   input wire                        POP,
- // input  [DWIDTH - 1:0] write_data_from_spi,
-  output reg [DWIDTH - 1:0]         read_data_to_spi,
+  input wire [DWIDTH - 1:0]         DATA_IN,
+  output reg [DWIDTH - 1:0]         DATA_OUT,
   output reg                        EMPTY,
   output reg                        FULL,
-  output reg [counter_width - 1:0]  cnt
+  output reg [counter_width - 1:0]  CNT
 );
 
   localparam pointer_width = $clog2 (FIFO_DEPTH);
@@ -22,32 +22,34 @@ module fifo # (parameter DWIDTH = 0,
   
   reg [DWIDTH - 1:0] DATA [0: FIFO_DEPTH - 1];
 
-  always @ (posedge FIFO_TX.PCLK)
-    if (!FIFO_TX.PRESETn) begin
+  always @ (posedge CLK or negedge RESETn )
+    if (!RESETn) begin
       wr_ptr = '0;
       rd_ptr = '0; end
-    else if (PUSH)
+    else begin 
+           if (PUSH)
       wr_ptr = (wr_ptr == max_ptr) ? '0 : wr_ptr + 1'b1;
-       else if (POP)
-         rd_ptr = (rd_ptr == max_ptr) ? '0 : rd_ptr + 1'b1;
+           if (POP)
+      rd_ptr = (rd_ptr == max_ptr) ? '0 : rd_ptr + 1'b1;
+      end
 
   always @ (posedge FIFO_TX.PCLK) begin
     if (PUSH)
-      DATA [wr_ptr] = FIFO_TX.PWDATA;
+      DATA [wr_ptr] = DATA_IN;
     if (POP)
-      read_data_to_spi = DATA [rd_ptr];
+      DATA_OUT = DATA [rd_ptr];
 end
 
 
-  always @ (posedge FIFO_TX.PCLK)
-    if (!FIFO_TX.PRESETn)
-      cnt = '0;
+  always @ (posedge CLK or negedge RESETn)
+    if (!RESETn)
+      CNT = '0;
     else if (PUSH & ~ POP)
-      cnt <= cnt + 1'b1;
+      CNT <= CNT + 1'b1;
     else if (POP & ~ PUSH)
-      cnt <= cnt - 1'b1;
+      CNT <= CNT - 1'b1;
 
-  assign EMPTY = ~| cnt;
-  assign FULL  = ~& cnt; 
+  assign EMPTY = ~| CNT;
+  assign FULL  = & CNT; 
 
 endmodule

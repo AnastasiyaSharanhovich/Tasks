@@ -17,12 +17,11 @@ interface apb_intf #(parameter AWIDTH = 4,
 
     modport TB_EX ( input PCLK, PRESETn, PSLVERR, PRDATA, PREADY, output PSEL, PENABLE, PWRITE, PADDR, PWDATA ); //from TB perspective
     
-    modport APB_EX ( input PCLK, PRESETn, PSEL, PENABLE, PWRITE, PADDR, PWDATA, output PREADY); //from top perspective
+    modport APB_EX ( input PCLK, PRESETn, PSEL, PENABLE, PWRITE, PADDR, PWDATA, output PREADY, PRDATA ); //from APB_SLAVE perspective
     
     modport DECOD_EX ( input PSEL, PENABLE, PADDR, output PSLVERR); //from apb_addr_dec perspective
     
-    modport FIFO_TX_EX ( input PCLK, PRESETn, PWDATA); //from fifo_tx perspective
+    modport APB_SPI_TOP_EX ( input PCLK, PRESETn, PADDR, PWRITE, PRDATA, output PWDATA); //from APB_SPI_TOP perspective
     
-    modport FIFO_RX_EX ( input PCLK, PRESETn, output PRDATA); //from fifo_rx perspective
     
 endinterface
